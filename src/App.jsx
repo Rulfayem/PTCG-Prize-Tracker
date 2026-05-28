@@ -2,7 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 
 //component imports
-import Navbar from "./components/Navbar";
+import AppNavbar from "./components/Navbar";
 
 //pages imports
 import DeckBuilderPage from "./pages/DeckBuilderPage";
@@ -14,7 +14,7 @@ import PrizeTrackingPage from "./pages/PrizeTrackingPage";
 export default function App() {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<ErrorPage />} />
