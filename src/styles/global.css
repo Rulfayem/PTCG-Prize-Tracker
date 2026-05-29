@@ -1,0 +1,5 @@
+/* --- Page Background --- */
+body {
+    background: linear-gradient(135deg, #b0b8c8, #dde4f0);
+    min-height: 100vh;
+}

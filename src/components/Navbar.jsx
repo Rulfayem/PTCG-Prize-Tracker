@@ -1,6 +1,7 @@
 import { Nav, Navbar, Button, Modal, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import "../styles/navbar.css";
 
 export default function AppNavbar() {
 
