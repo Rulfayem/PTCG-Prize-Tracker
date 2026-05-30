@@ -1,35 +1,99 @@
+//react-bootstreap imports
 import { Nav, Navbar, Button, Modal, Container, Form } from "react-bootstrap";
+
+//library imports
 import { Link } from "react-router-dom";
 import { useState } from "react";
+
+//firebase imports
+import { auth, db } from "../firebase.js"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
+//context imports
+import { useUser } from "../context/UserContext.jsx";
+
+//style imports
 import "../styles/navbar.css";
+
+//site constants
+const siteIcon = "/PTCG-Prize-Tracker-Favicon.png";
+const siteName = "PTCG Prize Tracker";
 
 export default function AppNavbar() {
 
+    //user context(s)
+    const { user, userProfile } = useUser();
+
+    //user auth state(s)
+    const isLoggedIn = !!user;
+
+    //modal visibility state(s)
     const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
-    const isLoggedIn = false; //temporary for testing
 
+    //form input state(s)
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [signupEmail, setSignupEmail] = useState("");
     const [signupPassword, setSignupPassword] = useState("");
     const [username, setUsername] = useState("");
 
+    //error state(s)
     const [loginError, setLoginError] = useState("");
     const [signupError, setSignupError] = useState("");
 
     //signup function
     const handleSignup = async () => {
-        "temp";
+        setSignupError("");
+
+        if (!signupEmail || !signupPassword || !username) {
+            return setSignupError("Please fill in all fields.");
+        }
+
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
+            const newUser = userCredentials.user;
+
+            await setDoc(doc(db, "users", newUser.uid), {
+                username: username,
+                email: signupEmail
+            });
+            setSignupEmail("");
+            setSignupPassword("");
+            setUsername("");
+            setSignupError("");
+            setShowSignup(false);
+        } catch (err) {
+            setSignupError(err.message);
+        }
     };
 
     //login function
     const handleLogin = async () => {
-        "temp";
+        setLoginError("");
+
+        if (!loginEmail || !loginPassword) {
+            return setLoginError("Please fill in all fields.");
+        }
+
+        try {
+            await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+            setLoginEmail("");
+            setLoginPassword("");
+            setLoginError("");
+            setShowLogin(false);
+        } catch (err) {
+            setLoginError(err.message);
+        }
     };
 
     const handleLogout = async () => {
-        "temp";
+        try {
+            await signOut(auth);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -39,17 +103,17 @@ export default function AppNavbar() {
                     <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
                         <img
                             alt="PTCG Prize Tracker Logo"
-                            src="/PTCG-Prize-Tracker-Favicon.png"
+                            src={siteIcon}
                             height="40"
                             width="40"
                             className="navbar-icon"
                         />
-                        PTCG Prize Tracker
+                        {siteName}
                     </Navbar.Brand>
                     <Nav className="ms-auto d-flex align-items-center gap-2">
                         {isLoggedIn ? (
                             <>
-                                <span>{username}</span>
+                                <span>{userProfile?.username}</span>
                                 <Button onClick={handleLogout}>Logout</Button>
                             </>
                         ) : (
@@ -65,7 +129,12 @@ export default function AppNavbar() {
             {/* LOGIN MODAL */}
             <Modal
                 show={showLogin}
-                onHide={() => { setShowLogin(false); }}
+                onHide={() => {
+                    setShowLogin(false);
+                    setLoginEmail("");
+                    setLoginPassword("");
+                    setLoginError("");
+                }}
                 backdrop="static"
                 keyboard={false}
                 centered
@@ -102,7 +171,13 @@ export default function AppNavbar() {
             {/* SIGNUP MODAL */}
             <Modal
                 show={showSignup}
-                onHide={() => { setShowSignup(false); }}
+                onHide={() => {
+                    setShowSignup(false);
+                    setUsername("");
+                    setSignupEmail("");
+                    setSignupPassword("");
+                    setSignupError("");
+                }}
                 backdrop="static"
                 keyboard={false}
                 centered

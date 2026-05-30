@@ -1,10 +1,10 @@
-//library imports
+//library import(s)
 import { Routes, Route } from "react-router-dom";
 
-//component imports
+//component import(s)
 import AppNavbar from "./components/Navbar";
 
-//pages imports
+//pages import(s)
 import DeckBuilderPage from "./pages/DeckBuilderPage";
 import DecksPage from "./pages/DecksPage";
 import ErrorPage from "./pages/ErrorPage";
