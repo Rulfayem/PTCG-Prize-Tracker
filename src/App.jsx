@@ -19,7 +19,9 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/decks" element={<DecksPage />} />
+        {/* TODO later update path to show specific deck currently being worked on */}
         <Route path="/decks/deck-builder" element={<DeckBuilderPage />} />
+        {/* TODO later update path to show specific deck currently being prize tracked */}
         <Route path="/decks/prize-tracking" element={<PrizeTrackingPage />} />
       </Routes>
     </>

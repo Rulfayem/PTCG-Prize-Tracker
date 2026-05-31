@@ -16,9 +16,15 @@ export function useUser() {
 }
 
 export function UserProvider({ children }) {
+
+    //user state(s)
     const [user, setUser] = useState(null);
     const [userProfile, setUserProfile] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    //modal visibility state(s)
+    const [showLogin, setShowLogin] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
 
     useEffect(() => {
         const stopListening = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -47,7 +53,7 @@ export function UserProvider({ children }) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, userProfile, loading }}>
+        <UserContext.Provider value={{ user, userProfile, loading, showLogin, setShowLogin, showSignup, setShowSignup }}>
             {children}
         </UserContext.Provider>
     )

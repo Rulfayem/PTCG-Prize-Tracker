@@ -1,36 +1,31 @@
-//react-bootstreap imports
+//react-bootstreap import(s)
 import { Nav, Navbar, Button, Modal, Container, Form } from "react-bootstrap";
 
-//library imports
+//library import(s)
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-//firebase imports
+//firebase import(s)
 import { auth, db } from "../firebase.js"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
-//context imports
+//context import(s)
 import { useUser } from "../context/UserContext.jsx";
 
-//style imports
-import "../styles/navbar.css";
+//constants import(s)
+import { SITE_NAME, SITE_ICON } from "../constants.js";
 
-//site constants
-const siteIcon = "/PTCG-Prize-Tracker-Favicon.png";
-const siteName = "PTCG Prize Tracker";
+//style import(s)
+import "../styles/navbar.css";
 
 export default function AppNavbar() {
 
     //user context(s)
-    const { user, userProfile } = useUser();
+    const { user, userProfile, showLogin, setShowLogin, showSignup, setShowSignup } = useUser();
 
     //user auth state(s)
     const isLoggedIn = !!user;
-
-    //modal visibility state(s)
-    const [showLogin, setShowLogin] = useState(false);
-    const [showSignup, setShowSignup] = useState(false);
 
     //form input state(s)
     const [loginEmail, setLoginEmail] = useState("");
@@ -103,12 +98,12 @@ export default function AppNavbar() {
                     <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
                         <img
                             alt="PTCG Prize Tracker Logo"
-                            src={siteIcon}
+                            src={SITE_ICON}
                             height="40"
                             width="40"
                             className="navbar-icon"
                         />
-                        {siteName}
+                        {SITE_NAME}
                     </Navbar.Brand>
                     <Nav className="ms-auto d-flex align-items-center gap-2">
                         {isLoggedIn ? (
