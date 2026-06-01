@@ -74,7 +74,22 @@ export default function HomePage() {
             {isLoggedIn ? (
                 //logged in view
                 <>
-
+                    <div className="text-center">
+                        <h2>Welcome back, {userProfile?.username}!</h2>
+                    </div>
+                    <Row className="qa-cards-row justify-content-center">
+                        {quickAccessCards.map((card) => (
+                            <Col xs={12} sm={3} key={card.title}>
+                                <Card className="qa-card" as={Link} to={card.path}>
+                                    <Card.Body>
+                                        {card.icon}
+                                        <Card.Title>{card.title}</Card.Title>
+                                        <Card.Text>{card.desc}</Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
                 </>
             ) : (
                 //guest view
