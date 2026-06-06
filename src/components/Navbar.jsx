@@ -34,6 +34,9 @@ export default function AppNavbar() {
     const [signupPassword, setSignupPassword] = useState("");
     const [username, setUsername] = useState("");
 
+    //loading state(s)
+    const [isLoading, setIsLoading] = useState(false);
+
     //error state(s)
     const [loginError, setLoginError] = useState("");
     const [signupError, setSignupError] = useState("");
@@ -54,6 +57,8 @@ export default function AppNavbar() {
             return setSignupError("Username can only contain letters, numbers, underscores and hyphens.");
         }
 
+        setIsLoading(true);
+
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
             const newUser = userCredentials.user;
@@ -62,6 +67,7 @@ export default function AppNavbar() {
                 username: username,
                 email: signupEmail
             });
+            setIsLoading(false);
             setSignupEmail("");
             setSignupPassword("");
             setUsername("");
@@ -77,6 +83,7 @@ export default function AppNavbar() {
             else {
                 setSignupError("Something went wrong. Please try again.");
             }
+            setIsLoading(false);
         }
     };
 
@@ -88,8 +95,11 @@ export default function AppNavbar() {
             return setLoginError("Please fill in all fields.");
         }
 
+        setIsLoading(true);
+
         try {
             await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+            setIsLoading(false);
             setLoginEmail("");
             setLoginPassword("");
             setLoginError("");
@@ -104,6 +114,7 @@ export default function AppNavbar() {
             else {
                 setLoginError("Something went wrong. Please try again.");
             }
+            setIsLoading(false);
         }
     }
 
@@ -189,7 +200,9 @@ export default function AppNavbar() {
                     {loginError && <p className="text-danger">{loginError}</p>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleLogin}>Login</Button>
+                    <Button onClick={handleLogin} disabled={isLoading}>
+                        {isLoading ? "Logging in..." : "Login"}
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
@@ -244,7 +257,9 @@ export default function AppNavbar() {
                     {signupError && <p className="text-danger">{signupError}</p>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleSignup}>Sign up</Button>
+                    <Button onClick={handleSignup} disabled={isLoading}>
+                        {isLoading ? "Signing up..." : "Sign up"}
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>
