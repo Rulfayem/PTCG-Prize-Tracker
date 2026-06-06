@@ -60,7 +60,15 @@ export default function AppNavbar() {
             setSignupError("");
             setShowSignup(false);
         } catch (err) {
-            setSignupError(err.message);
+            if (err.code === "auth/invalid-email") {
+                setSignupError("Please enter a valid email address.");
+            }
+            else if (err.code === "auth/invalid-credential") {
+                setSignupError("Incorrect email or password.");
+            }
+            else {
+                setSignupError("Something went wrong. Please try again.");
+            }
         }
     };
 
@@ -79,9 +87,17 @@ export default function AppNavbar() {
             setLoginError("");
             setShowLogin(false);
         } catch (err) {
-            setLoginError(err.message);
+            if (err.code === "auth/invalid-email") {
+                setLoginError("Please enter a valid email address.");
+            }
+            else if (err.code === "auth/invalid-credential") {
+                setLoginError("Incorrect email or password.");
+            }
+            else {
+                setLoginError("Something went wrong. Please try again.");
+            }
         }
-    };
+    }
 
     const handleLogout = async () => {
         try {
