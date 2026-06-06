@@ -1,7 +1,37 @@
 /* --- Entire Navbar --- */
 .ptcg-navbar {
-    background: linear-gradient(180deg, #1a1a2e, #2a2a3e);
+    background: linear-gradient(180deg, #0f0f1a, #1a1a2a);
     border-bottom: 2px solid rgba(255, 215, 0, 0.9);
     color: white;
     /* temporary */
+}
+
+.navbar-site-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar-username {
+    color: #c9d1d9;
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: 0.3em;
+}
+
+.navbar-button-logout,
+.navbar-button-login,
+.navbar-button-signup {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 0.03em;
 }

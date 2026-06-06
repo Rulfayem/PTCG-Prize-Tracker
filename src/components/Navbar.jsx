@@ -111,6 +111,8 @@ export default function AppNavbar() {
         <>
             <Navbar className="ptcg-navbar">
                 <Container>
+
+                    {/* left side of navbar - site icon and name */}
                     <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
                         <img
                             alt="PTCG Prize Tracker Logo"
@@ -119,18 +121,20 @@ export default function AppNavbar() {
                             width="40"
                             className="navbar-icon"
                         />
-                        {SITE_NAME}
+                        <span className="navbar-site-name">{SITE_NAME}</span>
                     </Navbar.Brand>
+
+                    {/* right side of navbar - username and buttons */}
                     <Nav className="ms-auto d-flex align-items-center gap-2">
                         {isLoggedIn ? (
                             <>
-                                <span>{userProfile?.username}</span>
-                                <Button onClick={handleLogout}>Logout</Button>
+                                <span className="navbar-username">{userProfile?.username}</span>
+                                <Button className="navbar-button-logout" onClick={handleLogout}>Logout</Button>
                             </>
                         ) : (
                             <>
-                                <Button onClick={() => { setShowLogin(true) }}>Login</Button>
-                                <Button onClick={() => { setShowSignup(true) }}>Signup</Button>
+                                <Button className="navbar-button-login" onClick={() => { setShowLogin(true) }}>Login</Button>
+                                <Button className="navbar-button-signup" onClick={() => { setShowSignup(true) }}>Signup</Button>
                             </>
                         )}
                     </Nav>
