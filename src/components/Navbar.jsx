@@ -46,6 +46,14 @@ export default function AppNavbar() {
             return setSignupError("Please fill in all fields.");
         }
 
+        if (username.length < 2) {
+            return setSignupError("Username is too short.");
+        } else if (username.length > 18) {
+            return setSignupError("Username is too long.");
+        } else if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+            return setSignupError("Username can only contain letters, numbers, underscores and hyphens.");
+        }
+
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
             const newUser = userCredentials.user;
