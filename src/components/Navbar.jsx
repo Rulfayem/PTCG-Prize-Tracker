@@ -145,6 +145,7 @@ export default function AppNavbar() {
                             placeholder="Email"
                             value={loginEmail}
                             onChange={(e) => setLoginEmail(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleLogin(); }}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -154,6 +155,7 @@ export default function AppNavbar() {
                             placeholder="Password"
                             value={loginPassword}
                             onChange={(e) => setLoginPassword(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleLogin(); }}
                         />
                     </Form.Group>
                     {loginError && <p className="text-danger">{loginError}</p>}
@@ -188,6 +190,7 @@ export default function AppNavbar() {
                             placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleSignup(); }}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -197,6 +200,7 @@ export default function AppNavbar() {
                             placeholder="Email"
                             value={signupEmail}
                             onChange={(e) => setSignupEmail(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleSignup(); }}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -206,6 +210,7 @@ export default function AppNavbar() {
                             placeholder="Password"
                             value={signupPassword}
                             onChange={(e) => setSignupPassword(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleSignup(); }}
                         />
                     </Form.Group>
                     {signupError && <p className="text-danger">{signupError}</p>}

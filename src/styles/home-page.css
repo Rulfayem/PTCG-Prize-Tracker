@@ -1,12 +1,113 @@
+/* --- Entire Homepage --- */
+
 .homepage-container {
     padding-top: 3rem;
 }
 
+.main-title {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 0.005em;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+}
+
+.tagline {
+    font-size: 1.3rem;
+    color: #2d3748;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    max-width: 550px;
+    margin: 1.5rem auto 1.5rem;
+}
+
+.hero-buttons-row {
+    margin: 1.5rem 0 3rem 0;
+}
+
+.hero-button-signup {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    padding: 0.6rem 2rem;
+    border-radius: 25px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: white;
+}
+
+.hero-button-login {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    border: none;
+    padding: 0.6rem 2rem;
+    border-radius: 25px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: white;
+}
+
+/* Shared Card Styling */
+
+.card-icon {
+    margin-bottom: 0.4rem;
+}
+
+.card.info-card .card-body,
+.qa-card .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Logged In View Styling */
+
+.welcome-message {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .qa-cards-row {
-    padding-top: 25vh;
+    padding-top: 3vh;
 }
 
 .qa-card {
     text-decoration: none;
     color: inherit;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.qa-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.4s ease;
+}
+
+.qa-card:not(:hover) {
+    transition: transform 0.4s ease-out;
+}
+
+/* Guest View Styling */
+
+.card.info-card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: inherit;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.4s ease;
+}
+
+.info-card:not(:hover) {
+    transition: transform 0.4s ease-out;
 }
