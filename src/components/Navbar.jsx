@@ -148,12 +148,12 @@ export default function AppNavbar() {
                         {isLoggedIn ? (
                             <>
                                 <span className="navbar-username">{userProfile?.username}</span>
-                                <Button className="navbar-button-logout" onClick={handleLogout}>Logout</Button>
+                                <Button className="button-gradient" onClick={handleLogout}>Logout</Button>
                             </>
                         ) : (
                             <>
-                                <Button className="navbar-button-login" onClick={() => { setShowLogin(true) }}>Login</Button>
-                                <Button className="navbar-button-signup" onClick={() => { setShowSignup(true) }}>Signup</Button>
+                                <Button className="button-gradient" onClick={() => { setShowLogin(true) }}>Login</Button>
+                                <Button className="button-gradient" onClick={() => { setShowSignup(true) }}>Signup</Button>
                             </>
                         )}
                     </Nav>

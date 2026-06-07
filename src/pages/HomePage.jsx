@@ -132,8 +132,8 @@ export default function HomePage() {
                         <h1 className="main-title">{SITE_NAME}</h1>
                         <p className="tagline">Track your prize cards, manage your decks, and level up your Pokémon TCG game — all in one place.</p>
                         <div className=" hero-buttons-row text-center d-flex gap-2 justify-content-center">
-                            <Button className="hero-button-signup" onClick={() => { setShowSignup(true) }}>Sign up now!</Button>
-                            <Button className="hero-button-login" onClick={() => { setShowLogin(true) }}>Login here</Button>
+                            <Button className="button-gradient" onClick={() => { setShowSignup(true) }}>Sign up now!</Button>
+                            <Button className="button-gradient" onClick={() => { setShowLogin(true) }}>Login here</Button>
                         </div>
                     </div>
                     <Row className="info-cards-row justify-content-center">

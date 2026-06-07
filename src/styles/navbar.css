@@ -23,15 +23,3 @@
     font-size: 1.05rem;
     letter-spacing: 0.3em;
 }
-
-.navbar-button-logout,
-.navbar-button-login,
-.navbar-button-signup {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border: none;
-    border-radius: 20px;
-    padding: 0.4rem 1.2rem;
-    font-weight: 500;
-    color: white;
-    letter-spacing: 0.03em;
-}

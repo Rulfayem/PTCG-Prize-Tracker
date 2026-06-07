@@ -7,5 +7,15 @@ body {
     font-family: 'Roboto', 'Helvetica Nue', Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+}
+
+/* Shared Button Style */
+.button-gradient {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    border: none;
+    padding: 0.35rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: white;
 }
