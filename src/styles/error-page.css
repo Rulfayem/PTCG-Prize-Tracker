@@ -1,0 +1,39 @@
+.error-page-wrapper {
+    background-color: #e8f5e9;
+    width: 100%;
+
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-title {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed, #a78bfa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.error-subtitle {
+    color: #7b6d44;
+    font-weight: 500;
+}
+
+.psyduck-link-home:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.psyduck-link-home:not(:hover) {
+    transition: transform 0.2s ease-out;
+}
+
+.psyduck-hint {
+    color: #7b6d44;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 600;
+}
