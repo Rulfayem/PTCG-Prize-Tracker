@@ -22,7 +22,7 @@
 }
 
 .psyduck-link-home:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
     transition: transform 0.2s ease;
     cursor: pointer;
 }

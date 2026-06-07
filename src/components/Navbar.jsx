@@ -129,7 +129,7 @@ export default function AppNavbar() {
     return (
         <>
             <Navbar className="ptcg-navbar">
-                <Container>
+                <Container fluid className="px-5">
 
                     {/* left side of navbar - site icon and name */}
                     <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-2">
