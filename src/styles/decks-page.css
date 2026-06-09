@@ -1,0 +1,17 @@
+.decks-folder {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.decks-folder:hover {
+    transform: translateY(-5px);
+    transition: transform 0.4s ease;
+}
+
+.decks-folder:not(:hover) {
+    transition: transform 0.4s ease-out;
+}
