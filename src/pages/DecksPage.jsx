@@ -57,7 +57,7 @@ export default function DecksPage() {
                 {decks
                     .filter((deck) => deck.name.toLowerCase().includes(searchDecks.toLowerCase()))
                     .map((deck) => (
-                        <Col xs={12} sm={4} key={deck.id}>
+                        <Col className="mb-4" xs={12} sm={4} key={deck.id}>
                             <DeckFolder
                                 deck={deck}
                                 onDuplicate={handleDuplication}

@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { HexColorPicker } from "react-colorful";
 
+//react icon import(s)
+import { TbDotsVertical } from "react-icons/tb";
+
 //constants import(s)
 import { LEGAL_DECK } from "../constants";
 
@@ -37,14 +40,14 @@ export default function DeckFolder({ deck, onDuplicate, onDelete }) {
     }, [showColourPicker]);
 
     return (
-        <Card className="decks-folder" onClick={() => navigate(`/decks/${deck.id}`)}>
+        <Card className="decks-folder h-100" onClick={() => navigate(`/decks/${deck.id}`)}>
 
             {/*banner with kebab button*/}
             <div style={{ backgroundColor: deckColour, height: "80px", position: 'relative' }}>
 
                 {/*kebab dropdown menu*/}
                 <Dropdown onClick={(e) => e.stopPropagation()}>
-                    <Dropdown.Toggle>⋮</Dropdown.Toggle>
+                    <Dropdown.Toggle bsPrefix="kebab-toggle"><TbDotsVertical size={20} /></Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={() => setShowColourPicker(true)}>Colour</Dropdown.Item>
                         <Dropdown.Item onClick={() => setIsRenaming(true)}>Rename</Dropdown.Item>
@@ -76,7 +79,7 @@ export default function DeckFolder({ deck, onDuplicate, onDelete }) {
                 <Card.Text>{deck.cardCount} / 60 cards</Card.Text>
 
                 {/*progress bar*/}
-                <div style={{ backgroundColor: '#e0e0e0', borderRadius: '4px', height: '6px' }}>
+                <div className="progress-bar-container" style={{ backgroundColor: '#e0e0e0', borderRadius: '4px', height: '6px' }}>
                     <div style={{
                         backgroundColor: deckColour,
                         width: `${(deck.cardCount / 60) * 100}%`,
