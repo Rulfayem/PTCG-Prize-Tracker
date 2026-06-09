@@ -9,7 +9,7 @@ import { HexColorPicker } from "react-colorful";
 //constants import(s)
 import { LEGAL_DECK } from "../constants";
 
-export default function DeckFolder({ deck }) {
+export default function DeckFolder({ deck, onDuplicate }) {
     const navigate = useNavigate();
 
     const [isRenaming, setIsRenaming] = useState(false);
@@ -48,7 +48,7 @@ export default function DeckFolder({ deck }) {
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={() => setShowColourPicker(true)}>Colour</Dropdown.Item>
                         <Dropdown.Item onClick={() => setIsRenaming(true)}>Rename</Dropdown.Item>
-                        <Dropdown.Item>Duplicate</Dropdown.Item>
+                        <Dropdown.Item onClick={() => onDuplicate(deck)}>Duplicate</Dropdown.Item>
                         <Dropdown.Item>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

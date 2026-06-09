@@ -1,6 +1,9 @@
 //react-bootstrap import(s)
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
 
+//library cimport(s)
+import { useState } from "react";
+
 //component import(s)
 import DeckFolder from "../components/DeckFolder";
 
@@ -17,6 +20,13 @@ const dummyDecks = [
 ];
 
 export default function DecksPage() {
+
+    const [decks, setDecks] = useState(dummyDecks);
+
+    const handleDuplication = (deck) => {
+        setDecks([...decks, { ...deck, id: Date.now().toString(), name: `${deck.name} (copy)` }]);
+    };
+
     return (
         <Container>
             <Row>
@@ -33,9 +43,9 @@ export default function DecksPage() {
                 </Col>
             </Row>
             <Row>
-                {dummyDecks.map((deck) => (
+                {decks.map((deck) => (
                     <Col xs={12} sm={4} key={deck.id}>
-                        <DeckFolder deck={deck} />
+                        <DeckFolder deck={deck} onDuplicate={handleDuplication} />
                     </Col>
                 ))}
             </Row>
