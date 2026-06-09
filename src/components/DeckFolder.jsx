@@ -5,8 +5,8 @@ import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-//legal deck size constant — refactor into constants.js later
-const legalDeckSize = 60;
+//constants import(s)
+import { LEGAL_DECK_SIZE } from "../constants";
 
 export default function DeckFolder({ deck }) {
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function DeckFolder({ deck }) {
                 )}
             </div>
             <Card.Body>
-                {deck.cardCount !== legalDeckSize && <span>Not Legal!</span>}
+                {deck.cardCount !== LEGAL_DECK_SIZE && <span>Not Legal!</span>}
                 <Card.Title>{deck.name}</Card.Title>
                 <Card.Text>{deck.cardCount} / 60 cards</Card.Text>
 

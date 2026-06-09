@@ -4,6 +4,9 @@ import { Container, Button, Row, Col, Form } from "react-bootstrap";
 //component import(s)
 import DeckFolder from "../components/DeckFolder";
 
+//constants import(s)
+import { TITLE_MY_DECKS } from "../constants";
+
 //style import(s)
 import "../styles/decks-page.css";
 
@@ -18,7 +21,7 @@ export default function DecksPage() {
         <Container>
             <Row>
                 <Col>
-                    <h1>Decks</h1>
+                    <h1>{TITLE_MY_DECKS}</h1>
                 </Col>
                 <Col xs="auto">
                     <Button>+ New Deck</Button>

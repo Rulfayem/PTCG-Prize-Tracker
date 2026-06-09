@@ -11,7 +11,7 @@ import { useUser } from "../context/UserContext";
 import { TbPlayCardStarFilled, TbStack3Filled, TbFoldersFilled } from "react-icons/tb";
 
 //constants import(s)
-import { SITE_NAME } from "../constants";
+import { SITE_NAME, TITLE_DECK_BUILDER, TITLE_PRIZE_TRACKING, TITLE_MY_DECKS } from "../constants";
 
 //style import(s)
 import "../styles/home-page.css";
@@ -21,42 +21,40 @@ import "../styles/home-page.css";
 const informationCards = [
     {
         icon: <TbPlayCardStarFilled size={32} color="#667eea" />,
-        title: "Prize Tracking",
+        title: TITLE_PRIZE_TRACKING,
         desc: "Calculate your current prize cards in real time and plan your game.",
     },
     {
         icon: <TbStack3Filled size={32} color="#667eea" />,
-        title: "Deck Builder",
+        title: TITLE_DECK_BUILDER,
         desc: "Build and save your decks the exact way you want them.",
     },
     {
         icon: <TbFoldersFilled size={32} color="#667eea" />,
-        title: "My Decks",
+        title: TITLE_MY_DECKS,
         desc: "Browse and review all your decks, edit them anytime you like.",
     }
 ];
-
-//dont forget maybe make another constant variable to use in object like same title for both types of cards
 
 //quick access cards shown only for logged in users
 const quickAccessCards = [
     {
         icon: <TbPlayCardStarFilled size={32} color="#667eea" />,
-        title: "Prize Tracking",
+        title: TITLE_PRIZE_TRACKING,
         desc: "Start tracking your prize cards for your current game.",
         //TODO later update path to show specific deck currently being prize tracked
         path: "/decks/prize-tracking",
     },
     {
         icon: <TbStack3Filled size={32} color="#667eea" />,
-        title: "Deck Builder",
+        title: TITLE_DECK_BUILDER,
         desc: "Create and save your decks.",
         //TODO update to show in path specific deck being worked on
         path: "/decks/deck-builder",
     },
     {
         icon: <TbFoldersFilled size={32} color="#667eea" />,
-        title: "My Decks",
+        title: TITLE_MY_DECKS,
         desc: "View and manage all your decks.",
         path: "/decks",
     }
@@ -94,6 +92,7 @@ const loginMessage = [
 const randomMessage = loginMessage[Math.floor(Math.random() * loginMessage.length)];
 
 export default function HomePage() {
+
     //user context(s)
     const { user, userProfile, setShowLogin, setShowSignup, } = useUser();
 

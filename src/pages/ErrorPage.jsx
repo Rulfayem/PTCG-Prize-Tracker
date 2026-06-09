@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 //style import(s)
 import "../styles/error-page.css";
 
+
 const confusedPsyduckImage = "../confused-psyduck.gif";
 
 export default function ErrorPage() {

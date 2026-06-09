@@ -1,9 +1,8 @@
 /* --- Entire Navbar --- */
+
 .ptcg-navbar {
     background: linear-gradient(180deg, #0f0f1a, #1a1a2a);
     border-bottom: 2px solid rgba(255, 215, 0, 0.9);
-    color: white;
-    /* temporary */
 }
 
 .navbar-site-name {
