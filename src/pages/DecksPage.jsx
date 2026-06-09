@@ -1,8 +1,9 @@
 //react-bootstrap import(s)
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
 
-//library cimport(s)
+//library import(s)
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 //component import(s)
 import DeckFolder from "../components/DeckFolder";
@@ -20,6 +21,7 @@ const dummyDecks = [
 ];
 
 export default function DecksPage() {
+    const navigate = useNavigate();
 
     const [decks, setDecks] = useState(dummyDecks);
     const [searchDecks, setSearchDecks] = useState("");
@@ -39,7 +41,7 @@ export default function DecksPage() {
                     <h1>{TITLE_MY_DECKS}</h1>
                 </Col>
                 <Col xs="auto">
-                    <Button>+ New Deck</Button>
+                    <Button onClick={() => navigate(`/decks/new`)}>+ New Deck</Button>
                 </Col>
             </Row>
             <Row>
