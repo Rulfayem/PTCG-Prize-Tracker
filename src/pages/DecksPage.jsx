@@ -27,6 +27,10 @@ export default function DecksPage() {
         setDecks([...decks, { ...deck, id: Date.now().toString(), name: `${deck.name} (copy)` }]);
     };
 
+    const handleDeletion = (deck) => {
+        setDecks(decks.filter((existingDeck) => existingDeck.id !== deck.id));
+    };
+
     return (
         <Container>
             <Row>
@@ -45,7 +49,11 @@ export default function DecksPage() {
             <Row>
                 {decks.map((deck) => (
                     <Col xs={12} sm={4} key={deck.id}>
-                        <DeckFolder deck={deck} onDuplicate={handleDuplication} />
+                        <DeckFolder
+                            deck={deck}
+                            onDuplicate={handleDuplication}
+                            onDelete={handleDeletion}
+                        />
                     </Col>
                 ))}
             </Row>
