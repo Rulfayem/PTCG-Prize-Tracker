@@ -22,6 +22,7 @@ const dummyDecks = [
 export default function DecksPage() {
 
     const [decks, setDecks] = useState(dummyDecks);
+    const [searchDecks, setSearchDecks] = useState("");
 
     const handleDuplication = (deck) => {
         setDecks([...decks, { ...deck, id: Date.now().toString(), name: `${deck.name} (copy)` }]);
@@ -43,19 +44,25 @@ export default function DecksPage() {
             </Row>
             <Row>
                 <Col xs={4}>
-                    <Form.Control placeholder="Search decks..." />
+                    <Form.Control
+                        placeholder="Search decks..."
+                        value={searchDecks}
+                        onChange={(e) => setSearchDecks(e.target.value)}
+                    />
                 </Col>
             </Row>
             <Row>
-                {decks.map((deck) => (
-                    <Col xs={12} sm={4} key={deck.id}>
-                        <DeckFolder
-                            deck={deck}
-                            onDuplicate={handleDuplication}
-                            onDelete={handleDeletion}
-                        />
-                    </Col>
-                ))}
+                {decks
+                    .filter((deck) => deck.name.toLowerCase().includes(searchDecks.toLowerCase()))
+                    .map((deck) => (
+                        <Col xs={12} sm={4} key={deck.id}>
+                            <DeckFolder
+                                deck={deck}
+                                onDuplicate={handleDuplication}
+                                onDelete={handleDeletion}
+                            />
+                        </Col>
+                    ))}
             </Row>
         </Container>
     );
