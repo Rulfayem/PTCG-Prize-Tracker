@@ -1,44 +1,47 @@
 //react-bootstrap import(s)
-import { Card } from "react-bootstrap";
+import { Card, Form, Dropdown } from "react-bootstrap";
 
 //library import(s)
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 //constants import(s)
-import { LEGAL_DECK_SIZE } from "../constants";
+import { LEGAL_DECK } from "../constants";
 
 export default function DeckFolder({ deck }) {
     const navigate = useNavigate();
 
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    //toggles dropdown and stops click bubbling to card
-    function handleKebabClick(e) {
-        e.stopPropagation();
-        setDropdownOpen(!dropdownOpen);
-    }
+    const [isRenaming, setIsRenaming] = useState(false);
+    const [newName, setNewName] = useState(deck.name);
 
     return (
         <Card className="decks-folder" onClick={() => navigate(`/decks/${deck.id}`)}>
 
             {/*banner with kebab button*/}
             <div style={{ backgroundColor: deck.colour, height: "80px", position: 'relative' }}>
-                <button onClick={handleKebabClick} style={{ position: 'absolute', top: '8px', right: '8px' }}>⋮</button>
 
                 {/*kebab dropdown menu*/}
-                {dropdownOpen && (
-                    <div onClick={(e) => e.stopPropagation()} style={{ position: 'absolute', top: '36px', right: '8px', background: '#fff', border: '1px solid #ddd', borderRadius: '6px', zIndex: 10 }}>
-                        <div>Rename</div>
-                        <div>Colour</div>
-                        <div>Duplicate</div>
-                        <div>Delete</div>
-                    </div>
-                )}
+                <Dropdown onClick={(e) => e.stopPropagation()}>
+                    <Dropdown.Toggle>⋮</Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => setIsRenaming(true)}>Rename</Dropdown.Item>
+                        <Dropdown.Item>Colour</Dropdown.Item>
+                        <Dropdown.Item>Duplicate</Dropdown.Item>
+                        <Dropdown.Item>Delete</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </div>
             <Card.Body>
-                {deck.cardCount !== LEGAL_DECK_SIZE && <span>Not Legal!</span>}
-                <Card.Title>{deck.name}</Card.Title>
+                {deck.cardCount !== LEGAL_DECK && <span>Not Legal!</span>}
+                {isRenaming ? (
+                    <Form.Control value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => { if (e.key === "Enter") setIsRenaming(false); }}
+                    />
+                ) : (
+                    <Card.Title>{newName}</Card.Title>
+                )}
                 <Card.Text>{deck.cardCount} / 60 cards</Card.Text>
 
                 {/*progress bar*/}
