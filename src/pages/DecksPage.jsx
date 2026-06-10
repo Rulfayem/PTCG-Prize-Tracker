@@ -35,7 +35,7 @@ export default function DecksPage() {
     };
 
     return (
-        <Container>
+        <Container className="pt-4">
             <Row>
                 <Col>
                     <h1>{TITLE_MY_DECKS}</h1>
@@ -44,7 +44,8 @@ export default function DecksPage() {
                     <Button onClick={() => navigate(`/decks/new`)}>+ New Deck</Button>
                 </Col>
             </Row>
-            <Row>
+            {/* Search Bar */}
+            <Row className="mt-3">
                 <Col xs={4}>
                     <Form.Control
                         placeholder="Search decks..."
@@ -53,7 +54,8 @@ export default function DecksPage() {
                     />
                 </Col>
             </Row>
-            <Row>
+            {/* decks folder grid */}
+            <Row className="mt-3">
                 {decks
                     .filter((deck) => deck.name.toLowerCase().includes(searchDecks.toLowerCase()))
                     .map((deck) => (

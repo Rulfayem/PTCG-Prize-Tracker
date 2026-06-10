@@ -10,7 +10,7 @@ import { HexColorPicker } from "react-colorful";
 import { TbDotsVertical } from "react-icons/tb";
 
 //constants import(s)
-import { LEGAL_DECK } from "../constants";
+import { DECK_LEGALITY } from "../constants";
 
 export default function DeckFolder({ deck, onDuplicate, onDelete }) {
     const navigate = useNavigate();
@@ -40,10 +40,13 @@ export default function DeckFolder({ deck, onDuplicate, onDelete }) {
     }, [showColourPicker]);
 
     return (
-        <Card className="decks-folder h-100" onClick={() => navigate(`/decks/${deck.id}`)}>
-
+        <Card
+            className="decks-folder h-100"
+            style={{ "--deck-colour": deckColour }}
+            onClick={() => navigate(`/decks/${deck.id}`)}
+        >
             {/*banner with kebab button*/}
-            <div style={{ backgroundColor: deckColour, height: "80px", position: 'relative' }}>
+            <div style={{ backgroundColor: deckColour, height: "50px", position: 'relative' }}>
 
                 {/*kebab dropdown menu*/}
                 <Dropdown onClick={(e) => e.stopPropagation()}>
@@ -57,7 +60,7 @@ export default function DeckFolder({ deck, onDuplicate, onDelete }) {
                 </Dropdown>
             </div>
             <Card.Body>
-                {deck.cardCount !== LEGAL_DECK && <span>Not Legal!</span>}
+                {deck.cardCount !== DECK_LEGALITY && <span className="not-legal-badge">Not Legal!</span>}
                 {showColourPicker &&
                     <div ref={colourPickerRef} onClick={(e) => e.stopPropagation()}>
                         <HexColorPicker
