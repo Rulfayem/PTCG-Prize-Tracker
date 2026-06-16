@@ -3,7 +3,7 @@ import { Container, Row, Col, Badge, Button, Form } from "react-bootstrap";
 
 //library import(s)
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 //component import(s)
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -23,6 +23,7 @@ import { useUser } from "../context/UserContext";
 import { CATEGORY_SORT_ORDER } from "../constants";
 
 export default function DeckEditorPage() {
+    const navigate = useNavigate();
     const { deckId } = useParams();
     const { user } = useUser();
     const [deck, setDeck] = useState(null);
@@ -167,6 +168,9 @@ export default function DeckEditorPage() {
     return (
         <Container className="pt-4">
             <Row className="align-items-center mb-3">
+                <Col xs="auto">
+                    <Button variant="outline-secondary" onClick={() => navigate("/decks")}>← Back</Button>
+                </Col>
                 <Col>
                     {isRenamingDeck ? (
                         <Form.Control

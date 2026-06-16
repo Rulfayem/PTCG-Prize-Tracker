@@ -57,3 +57,7 @@
 .kebab-toggle:hover {
     color: rgba(0, 0, 0, 0.7);
 }
+
+.decks-folder .dropdown-menu {
+    z-index: 1050;
+}

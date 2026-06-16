@@ -105,6 +105,7 @@ export default function DecksPage() {
                                 deck={deck}
                                 onDuplicate={handleDuplication}
                                 onDelete={handleDeletion}
+                                userId={user.uid}
                             />
                         </Col>
                     ))}
