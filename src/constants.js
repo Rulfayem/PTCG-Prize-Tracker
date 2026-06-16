@@ -4,6 +4,7 @@ export const TITLE_PRIZE_TRACKING = "Prize Tracking";
 export const TITLE_DECK_BUILDER = "Deck Builder";
 export const TITLE_MY_DECKS = "My Decks";
 export const DECK_LEGALITY = 60;
+export const CATEGORY_SORT_ORDER = { "Pokemon": 0, "Trainer": 1, "Energy": 2 };
 
 //for future
 //export const DECK_LEGALITY_MESSAGE
