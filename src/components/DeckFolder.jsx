@@ -59,7 +59,7 @@ export default function DeckFolder({ deck, onDuplicate, onDelete }) {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-            <Card.Body>
+            <Card.Body onClick={(e) => { e.stopPropagation(); navigate(`/decks/${deck.id}`); }}>
                 {deck.cardCount !== DECK_LEGALITY && <span className="not-legal-badge">Not Legal!</span>}
                 {showColourPicker &&
                     <div ref={colourPickerRef} onClick={(e) => e.stopPropagation()}>

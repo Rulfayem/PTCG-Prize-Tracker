@@ -2,11 +2,19 @@
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
 
 //library import(s)
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 //component import(s)
 import DeckFolder from "../components/DeckFolder";
+import LoadingSpinner from "../components/LoadingSpinner";
+
+//firebase import(s)
+import { collection, getDocs, addDoc, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
+
+//context import(s)
+import { useUser } from "../context/UserContext";
 
 //constants import(s)
 import { TITLE_MY_DECKS } from "../constants";
@@ -14,25 +22,58 @@ import { TITLE_MY_DECKS } from "../constants";
 //style import(s)
 import "../styles/decks-page.css";
 
-const dummyDecks = [
-    { id: '1', name: 'King psychic deck', colour: '#d8b4fe', cardCount: 58 },
-    { id: '2', name: 'Fire aggro v2', colour: '#fed7aa', cardCount: 60 },
-    { id: '3', name: 'Electric test build', colour: '#bbf7d0', cardCount: 45 },
-];
-
 export default function DecksPage() {
     const navigate = useNavigate();
-
-    const [decks, setDecks] = useState(dummyDecks);
+    const { user } = useUser();
+    const [decks, setDecks] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [searchDecks, setSearchDecks] = useState("");
 
-    const handleDuplication = (deck) => {
-        setDecks([...decks, { ...deck, id: Date.now().toString(), name: `${deck.name} (copy)` }]);
-    };
+    //fetch decks from firestore on mount
+    useEffect(() => {
+        if (!user) return;
 
-    const handleDeletion = (deck) => {
-        setDecks(decks.filter((existingDeck) => existingDeck.id !== deck.id));
-    };
+        async function fetchDecks() {
+            try {
+                const decksRef = collection(db, "users", user.uid, "decks");
+                const decksSnap = await getDocs(decksRef);
+                const decksList = decksSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+                setDecks(decksList);
+            } catch (err) {
+                console.error("Error fetching decks:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchDecks();
+    }, [user]);
+
+    //duplicates a deck by creating a new firestore doc
+    async function handleDuplication(deck) {
+        try {
+            const decksRef = collection(db, "users", user.uid, "decks");
+            const newDeckRef = await addDoc(decksRef, {
+                name: `${deck.name} (copy)`,
+                colour: deck.colour,
+                createdAt: serverTimestamp(),
+            });
+            setDecks([...decks, { id: newDeckRef.id, name: `${deck.name} (copy)`, colour: deck.colour }]);
+        } catch (err) {
+            console.error("Error duplicating deck:", err);
+        }
+    }
+
+    //deletes a deck from firestore
+    async function handleDeletion(deck) {
+        try {
+            await deleteDoc(doc(db, "users", user.uid, "decks", deck.id));
+            setDecks(decks.filter((d) => d.id !== deck.id));
+        } catch (err) {
+            console.error("Error deleting deck:", err);
+        }
+    }
+
+    if (loading) return <LoadingSpinner />;
 
     return (
         <Container className="pt-4">
