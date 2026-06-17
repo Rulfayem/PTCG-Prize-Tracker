@@ -75,15 +75,18 @@ export default function DeckEditorPage() {
                 await updateDoc(cardRef, { quantity: existing.quantity + 1 });
                 setCards(cards.map((c) => c.id === existing.id ? { ...c, quantity: c.quantity + 1 } : c));
             } else {
-                //new card - add it to the subcollection
+                //fetch full card details from TCGdex API to get category, stage, trainerType
+                const res = await fetch(`https://api.tcgdex.net/v2/en/cards/${tcgCard.id}`);
+                const fullCard = await res.json();
+
                 const cardsRef = collection(db, "users", user.uid, "decks", deckId, "cards");
                 const newCardRef = await addDoc(cardsRef, {
                     tcgId: tcgCard.id,
                     name: tcgCard.name,
                     image: tcgCard.image,
-                    category: tcgCard.category ?? null,
-                    stage: tcgCard.stage ?? null,
-                    trainerType: tcgCard.trainerType ?? null,
+                    category: fullCard.category ?? null,
+                    stage: fullCard.stage ?? null,
+                    trainerType: fullCard.trainerType ?? null,
                     quantity: 1,
                 });
                 setCards([...cards, {
@@ -91,9 +94,9 @@ export default function DeckEditorPage() {
                     tcgId: tcgCard.id,
                     name: tcgCard.name,
                     image: tcgCard.image,
-                    category: tcgCard.category ?? null,
-                    stage: tcgCard.stage ?? null,
-                    trainerType: tcgCard.trainerType ?? null,
+                    category: fullCard.category ?? null,
+                    stage: fullCard.stage ?? null,
+                    trainerType: fullCard.trainerType ?? null,
                     quantity: 1,
                 }]);
             }
