@@ -179,7 +179,7 @@ export default function DeckEditorPage() {
                             onKeyDown={(e) => { if (e.key === "Enter") handleRenameDeck(newDeckName); }}
                             onBlur={() => handleRenameDeck(newDeckName)}
                             autoFocus
-                            style={{ width: `${Math.max(newDeckName.length, 10)}ch` }}
+                            style={{ width: `${Math.max(newDeckName.length, 10)}ch`, minWidth: "200px" }}
                         />
                     ) : (
                         <h1 className="mb-0" style={{ cursor: "pointer" }} onClick={() => { setNewDeckName(deck.name); setIsRenamingDeck(true); }}>

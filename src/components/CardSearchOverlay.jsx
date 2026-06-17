@@ -54,10 +54,13 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
     return (
         <div style={{
             position: "fixed",
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: "var(--bs-body-bg)",
+            top: "24px", left: "24px", right: "24px", bottom: "24px",
+            backgroundColor: "rgba(221, 228, 240, 0.8)",
+            backdropFilter: "blur(8px)",
             zIndex: 1050,
             overflowY: "auto",
+            borderRadius: "16px",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
         }}>
             <Container className="pt-4 pb-5">
                 {/* header row */}

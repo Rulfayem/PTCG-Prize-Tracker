@@ -82,7 +82,7 @@ export default function DecksPage() {
                     <h1>{TITLE_MY_DECKS}</h1>
                 </Col>
                 <Col xs="auto">
-                    <Button onClick={() => navigate(`/decks/new`)}>+ New Deck</Button>
+                    <Button className="button-gradient" onClick={() => navigate(`/decks/new`)}>+ New Deck</Button>
                 </Col>
             </Row>
             {/* Search Bar */}
