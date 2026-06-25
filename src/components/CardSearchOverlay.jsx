@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 //react-bootstrap import(s)
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 
 //library import(s)
 import { useState, useEffect } from "react";
@@ -55,7 +55,7 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
         <div style={{
             position: "fixed",
             top: "24px", left: "24px", right: "24px", bottom: "24px",
-            backgroundColor: "rgba(221, 228, 240, 0.8)",
+            backgroundColor: "rgba(221, 228, 240, 0.80)",
             backdropFilter: "blur(8px)",
             zIndex: 1050,
             overflowY: "auto",
@@ -103,84 +103,91 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                     <p className="text-muted">No cards found for "{query}".</p>
                 )}
 
-                {/* results grid + selected card panel */}
+                {/* results grid */}
                 {results.length > 0 && (
                     <Row>
-                        {/* card grid */}
-                        <Col xs={12} md={selectedCard ? 7 : 12}>
-                            <Row>
-                                {results.map((card) => {
-                                    const qty = getQuantity(card.id);
-                                    return (
-                                        <Col key={card.id} xs={6} sm={4} md={3} className="mb-4">
-                                            <div style={{ position: "relative", textAlign: "center" }}>
-                                                {/* card image - click to open full view */}
-                                                <img
-                                                    src={`${card.image}/low.webp`}
-                                                    alt={card.name}
-                                                    style={{
-                                                        width: "100%",
-                                                        borderRadius: "8px",
-                                                        cursor: "pointer",
-                                                        border: selectedCard?.id === card.id ? "2px solid var(--bs-primary)" : "2px solid transparent",
-                                                    }}
-                                                    onClick={() => setSelectedCard(card)}
-                                                />
-                                                {/* +/- controls */}
-                                                <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
-                                                    <Button
-                                                        variant="outline-secondary"
-                                                        size="sm"
-                                                        onClick={() => onRemoveCard(card)}
-                                                        disabled={qty === 0}
-                                                    >-</Button>
-                                                    <span>{qty}</span>
-                                                    <Button
-                                                        variant="outline-secondary"
-                                                        size="sm"
-                                                        onClick={() => onAddCard(card)}
-                                                    >+</Button>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                    );
-                                })}
-                            </Row>
-                        </Col>
-
-                        {/* selected card full view */}
-                        {selectedCard && (
-                            <Col xs={12} md={5}>
-                                <div style={{ position: "sticky", top: "20px", textAlign: "center" }}>
-                                    <img
-                                        src={`${selectedCard.image}/high.webp`}
-                                        alt={selectedCard.name}
-                                        style={{ width: "100%", maxWidth: "300px", borderRadius: "12px" }}
-                                    />
-                                    <div className="d-flex align-items-center justify-content-center gap-3 mt-3">
-                                        <Button
-                                            variant="outline-secondary"
-                                            onClick={() => onRemoveCard(selectedCard)}
-                                            disabled={getQuantity(selectedCard.id) === 0}
-                                        >-</Button>
-                                        <span style={{ fontSize: "1.2rem" }}>{getQuantity(selectedCard.id)}</span>
-                                        <Button
-                                            variant="outline-secondary"
-                                            onClick={() => onAddCard(selectedCard)}
-                                        >+</Button>
+                        {results.map((card) => {
+                            const qty = getQuantity(card.id);
+                            return (
+                                <Col key={card.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
+                                    <div style={{ position: "relative", textAlign: "center", overflow: "visible" }}>
+                                        {/* quantity badge */}
+                                        {qty > 0 && (
+                                            <div style={{
+                                                position: "absolute",
+                                                top: "-8px",
+                                                right: "-8px",
+                                                backgroundColor: "rgba(0,0,0,0.7)",
+                                                color: "white",
+                                                borderRadius: "50%",
+                                                width: "24px",
+                                                height: "24px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                fontSize: "0.75rem",
+                                                fontWeight: "700",
+                                                zIndex: 1,
+                                            }}>{qty}</div>
+                                        )}
+                                        {/* card image - click to open full view */}
+                                        <img
+                                            src={`${card.image}/low.webp`}
+                                            alt={card.name}
+                                            style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
+                                            onClick={() => setSelectedCard(card)}
+                                        />
+                                        {/* +/- controls */}
+                                        <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
+                                            <Button
+                                                variant="outline-secondary"
+                                                size="sm"
+                                                onClick={() => onRemoveCard(card)}
+                                                disabled={qty === 0}
+                                            >-</Button>
+                                            <span>{qty}</span>
+                                            <Button
+                                                variant="outline-secondary"
+                                                size="sm"
+                                                onClick={() => onAddCard(card)}
+                                            >+</Button>
+                                        </div>
                                     </div>
-                                    <Button
-                                        variant="outline-secondary"
-                                        size="sm"
-                                        className="mt-2"
-                                        onClick={() => setSelectedCard(null)}
-                                    >Close</Button>
-                                </div>
-                            </Col>
-                        )}
+                                </Col>
+                            );
+                        })}
                     </Row>
                 )}
             </Container>
+
+            {/* card full view modal */}
+            <Modal show={!!selectedCard} onHide={() => setSelectedCard(null)} centered contentClassName="bg-transparent border-0 shadow-none">
+                <Modal.Body className="text-center p-0">
+                    {selectedCard && (
+                        <>
+                            <img
+                                src={`${selectedCard.image}/high.webp`}
+                                alt={selectedCard.name}
+                                style={{ width: "100%", maxWidth: "450px", borderRadius: "12px" }}
+                            />
+                            <div className="d-flex align-items-center justify-content-center gap-3 mt-3">
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() => onRemoveCard(selectedCard)}
+                                    disabled={getQuantity(selectedCard.id) === 0}
+                                >-</Button>
+                                <span style={{ color: "white", fontSize: "1.2rem", fontWeight: "700" }}>
+                                    {getQuantity(selectedCard.id)}
+                                </span>
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() => onAddCard(selectedCard)}
+                                >+</Button>
+                            </div>
+                        </>
+                    )}
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }

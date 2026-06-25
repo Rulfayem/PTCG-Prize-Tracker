@@ -1,5 +1,5 @@
 //react-bootstrap import(s)
-import { Container, Row, Col, Badge, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Badge, Button, Form, Modal } from "react-bootstrap";
 
 //library import(s)
 import { useEffect, useState } from "react";
@@ -32,6 +32,7 @@ export default function DeckEditorPage() {
     const [showOverlay, setShowOverlay] = useState(false);
     const [isRenamingDeck, setIsRenamingDeck] = useState(false);
     const [newDeckName, setNewDeckName] = useState("");
+    const [selectedCard, setSelectedCard] = useState(null);
 
     useEffect(() => {
         if (!user) return;
@@ -204,37 +205,65 @@ export default function DeckEditorPage() {
                 <Col xs="auto"><Badge bg="danger">Energy: {energyCount}</Badge></Col>
             </Row>
 
-            {/* cards list */}
+            {/* cards grid */}
             {sortedCards.length === 0 ? (
                 <p className="text-muted">No cards yet. Hit "+ Add Cards" to get started.</p>
             ) : (
                 <Row>
                     {sortedCards.map((card) => (
-                        <Col key={card.id} xs={12} className="mb-2">
-                            <Row className="align-items-center">
-                                <Col xs="auto">
-                                    {/* card image preview */}
-                                    <img
-                                        src={`${card.image}/low.webp`}
-                                        alt={card.name}
-                                        style={{ height: "60px", borderRadius: "4px" }}
-                                    />
-                                </Col>
-                                <Col>
-                                    <strong>{card.name}</strong>
-                                    <div className="text-muted" style={{ fontSize: "0.85rem" }}>{card.category}</div>
-                                </Col>
-                                <Col xs="auto" className="d-flex align-items-center gap-2">
+                        <Col key={card.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
+                            <div style={{ position: "relative", textAlign: "center", overflow: "visible" }}>
+
+                                {/* quantity badge on top corner */}
+                                <div style={{
+                                    position: "absolute",
+                                    top: "-8px",
+                                    right: "-8px",
+                                    backgroundColor: "rgba(0,0,0,0.7)",
+                                    color: "white",
+                                    borderRadius: "50%",
+                                    width: "24px",
+                                    height: "24px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    fontSize: "0.75rem",
+                                    fontWeight: "700",
+                                    zIndex: 1,
+                                }}>{card.quantity}</div>
+
+                                {/* card image - click to open full view */}
+                                <img
+                                    src={`${card.image}/low.webp`}
+                                    alt={card.name}
+                                    style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
+                                    onClick={() => setSelectedCard(card)}
+                                />
+
+                                {/* +/- /delete controls */}
+                                <div className="d-flex align-items-center justify-content-center gap-1 mt-1">
                                     <Button variant="outline-secondary" size="sm" onClick={() => handleRemoveCard({ id: card.tcgId })}>-</Button>
-                                    <span>{card.quantity}</span>
                                     <Button variant="outline-secondary" size="sm" onClick={() => handleAddCard({ id: card.tcgId, name: card.name, image: card.image, category: card.category, stage: card.stage, trainerType: card.trainerType })}>+</Button>
                                     <Button variant="outline-danger" size="sm" onClick={() => handleDeleteCard(card)}>✕</Button>
-                                </Col>
-                            </Row>
+                                </div>
+                            </div>
                         </Col>
                     ))}
                 </Row>
             )}
+
+            {/* card full view modal */}
+            <Modal show={!!selectedCard} onHide={() => setSelectedCard(null)} centered contentClassName="bg-transparent border-0 shadow-none">
+                <Modal.Body className="text-center p-0">
+                    {selectedCard && (
+                        <img
+                            src={`${selectedCard.image}/high.webp`}
+                            alt={selectedCard.name}
+                            style={{ width: "100%", maxWidth: "450px", borderRadius: "12px" }}
+                        />
+                    )}
+                </Modal.Body>
+            </Modal>
 
             {/* card search overlay */}
             <CardSearchOverlay
