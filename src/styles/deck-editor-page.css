@@ -1,0 +1,25 @@
+/* --- Entire Deck Editor Page --- */
+
+/* Card Images */
+
+.card-hoverable {
+    transition: filter 0.15s ease, transform 0.15s ease;
+    cursor: pointer;
+}
+
+.card-hoverable:hover {
+    filter: brightness(1.08);
+    transform: scale(1.03);
+}
+
+/* +/- Button Styling */
+
+.button-gradient:hover {
+    filter: brightness(0.85);
+    transition: filter 0.15s ease;
+}
+
+.button-gradient:active {
+    filter: brightness(0.7);
+    transform: scale(0.95);
+}

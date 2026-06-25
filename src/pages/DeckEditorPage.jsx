@@ -22,6 +22,9 @@ import { useUser } from "../context/UserContext";
 //constants import(s)
 import { CATEGORY_SORT_ORDER } from "../constants";
 
+//style import(s)
+import "../styles/deck-editor-page.css";
+
 export default function DeckEditorPage() {
     const navigate = useNavigate();
     const { deckId } = useParams();
@@ -236,15 +239,16 @@ export default function DeckEditorPage() {
                                 <img
                                     src={`${card.image}/low.webp`}
                                     alt={card.name}
-                                    style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
+                                    className="card-hoverable"
+                                    style={{ width: "100%", borderRadius: "8px" }}
                                     onClick={() => setSelectedCard(card)}
                                 />
 
                                 {/* +/- /delete controls */}
-                                <div className="d-flex align-items-center justify-content-center gap-1 mt-1">
-                                    <Button variant="outline-secondary" size="sm" onClick={() => handleRemoveCard({ id: card.tcgId })}>-</Button>
-                                    <Button variant="outline-secondary" size="sm" onClick={() => handleAddCard({ id: card.tcgId, name: card.name, image: card.image, category: card.category, stage: card.stage, trainerType: card.trainerType })}>+</Button>
-                                    <Button variant="outline-danger" size="sm" onClick={() => handleDeleteCard(card)}>✕</Button>
+                                <div className="d-flex align-items-center justify-content-center gap-1 mt-2">
+                                    <Button className="button-gradient" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleRemoveCard({ id: card.tcgId })}>−</Button>
+                                    <Button className="button-gradient" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleAddCard({ id: card.tcgId, name: card.name, image: card.image, category: card.category, stage: card.stage, trainerType: card.trainerType })}>+</Button>
+                                    <Button variant="danger" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleDeleteCard(card)}>✕</Button>
                                 </div>
                             </div>
                         </Col>

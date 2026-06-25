@@ -12,6 +12,9 @@ import LoadingSpinner from "./LoadingSpinner";
 //react icon import(s)
 import { TbX, TbEye } from "react-icons/tb";
 
+//style import(s)
+import "../styles/deck-editor-page.css";
+
 export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCard, deckCards }) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -134,6 +137,7 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                                         <img
                                             src={`${card.image}/low.webp`}
                                             alt={card.name}
+                                            className="card-hoverable"
                                             style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
                                             onClick={() => setSelectedCard(card)}
                                         />
