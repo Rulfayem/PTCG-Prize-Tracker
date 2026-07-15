@@ -144,15 +144,17 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                                         {/* +/- controls */}
                                         <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
                                             <Button
-                                                variant="outline-secondary"
+                                                className="button-gradient"
                                                 size="sm"
+                                                style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
                                                 onClick={() => onRemoveCard(card)}
                                                 disabled={qty === 0}
                                             >-</Button>
                                             <span>{qty}</span>
                                             <Button
-                                                variant="outline-secondary"
+                                                className="button-gradient"
                                                 size="sm"
+                                                style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
                                                 onClick={() => onAddCard(card)}
                                             >+</Button>
                                         </div>
@@ -176,7 +178,8 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                             />
                             <div className="d-flex align-items-center justify-content-center gap-3 mt-3">
                                 <Button
-                                    variant="outline-secondary"
+                                    className="button-gradient"
+                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
                                     onClick={() => onRemoveCard(selectedCard)}
                                     disabled={getQuantity(selectedCard.id) === 0}
                                 >-</Button>
@@ -184,7 +187,8 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                                     {getQuantity(selectedCard.id)}
                                 </span>
                                 <Button
-                                    variant="outline-secondary"
+                                    className="button-gradient"
+                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
                                     onClick={() => onAddCard(selectedCard)}
                                 >+</Button>
                             </div>

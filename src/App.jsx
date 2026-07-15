@@ -17,7 +17,7 @@ export default function App() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <AppNavbar />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={<ErrorPage />} />

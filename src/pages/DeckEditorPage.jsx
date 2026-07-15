@@ -200,12 +200,12 @@ export default function DeckEditorPage() {
             </Row>
 
             {/* stats bar */}
-            <Row className="mb-4">
-                <Col xs="auto"><Badge bg="secondary">Total: {totalCards} / 60</Badge></Col>
-                <Col xs="auto"><Badge bg="warning" text="dark">Pokémon: {pokemonCount}</Badge></Col>
-                <Col xs="auto"><Badge bg="success">Basic: {basicPokemonCount}</Badge></Col>
-                <Col xs="auto"><Badge bg="info" text="dark">Supporters: {supporterCount}</Badge></Col>
-                <Col xs="auto"><Badge bg="danger">Energy: {energyCount}</Badge></Col>
+            <Row className="mb-4 g-2">
+                <Col xs="auto"><Badge pill bg="dark" style={{ fontSize: "0.85rem", padding: "6px 12px" }}>🃏 {totalCards} / 60</Badge></Col>
+                <Col xs="auto"><Badge pill style={{ fontSize: "0.85rem", padding: "6px 12px", background: "linear-gradient(135deg, #667eea, #764ba2)" }}>Pokémon: {pokemonCount}</Badge></Col>
+                <Col xs="auto"><Badge pill bg="success" style={{ fontSize: "0.85rem", padding: "6px 12px" }}>Basic: {basicPokemonCount}</Badge></Col>
+                <Col xs="auto"><Badge pill bg="info" style={{ fontSize: "0.85rem", padding: "6px 12px" }}>Supporters: {supporterCount}</Badge></Col>
+                <Col xs="auto"><Badge pill bg="danger" style={{ fontSize: "0.85rem", padding: "6px 12px" }}>Energy: {energyCount}</Badge></Col>
             </Row>
 
             {/* cards grid */}
