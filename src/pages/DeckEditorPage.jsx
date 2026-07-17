@@ -246,9 +246,9 @@ export default function DeckEditorPage() {
 
                                 {/* +/- /delete controls */}
                                 <div className="d-flex align-items-center justify-content-center gap-1 mt-2">
-                                    <Button className="button-gradient" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleRemoveCard({ id: card.tcgId })}>−</Button>
-                                    <Button className="button-gradient" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleAddCard({ id: card.tcgId, name: card.name, image: card.image, category: card.category, stage: card.stage, trainerType: card.trainerType })}>+</Button>
-                                    <Button variant="danger" size="sm" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }} onClick={() => handleDeleteCard(card)}>✕</Button>
+                                    <Button className="button-gradient" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }} onClick={() => handleRemoveCard({ id: card.tcgId })}>−</Button>
+                                    <Button className="button-gradient" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }} onClick={() => handleAddCard({ id: card.tcgId, name: card.name, image: card.image, category: card.category, stage: card.stage, trainerType: card.trainerType })}>+</Button>
+                                    <Button variant="danger" style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }} onClick={() => handleDeleteCard(card)}>✕</Button>
                                 </div>
                             </div>
                         </Col>

@@ -20,6 +20,7 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
     const [results, setResults] = useState([]);
     const [searching, setSearching] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [isTransparent, setIsTransparent] = useState(false);
 
     //search TCGdex API when query changes with small delay so it doesn't fire on every keystroke
     useEffect(() => {
@@ -58,22 +59,23 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
         <div style={{
             position: "fixed",
             top: "24px", left: "24px", right: "24px", bottom: "24px",
-            backgroundColor: "rgba(221, 228, 240, 0.80)",
-            backdropFilter: "blur(8px)",
+            backgroundColor: isTransparent ? "rgba(221, 228, 240, 0)" : "rgba(221, 228, 240, 0.80)",
+            backdropFilter: isTransparent ? "none" : "blur(8px)",
             zIndex: 1050,
             overflowY: "auto",
             borderRadius: "16px",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+            transition: "background-color 0.2s ease",
         }}>
             <Container className="pt-4 pb-5">
-                {/* header row */}
+                {/* header row - always visible */}
                 <Row className="align-items-center mb-4">
                     <Col>
-                        <h2 className="mb-0">Add Cards</h2>
+                        <h2 className="mb-0" style={{ opacity: isTransparent ? 0 : 1, transition: "opacity 0.2s ease" }}>Add Cards</h2>
                     </Col>
                     <Col xs="auto">
-                        {/* TODO: transparency toggle button (future) */}
-                        <Button variant="outline-secondary" className="me-2" disabled>
+                        {/* transparency toggle button */}
+                        <Button variant="outline-secondary" className="me-2" onClick={() => setIsTransparent(!isTransparent)}>
                             <TbEye />
                         </Button>
                         <Button variant="outline-danger" onClick={onClose}>
@@ -82,88 +84,89 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                     </Col>
                 </Row>
 
-                {/* search bar */}
-                <Row className="mb-4">
-                    <Col xs={12} md={6}>
-                        <Form.Control
-                            placeholder="Search cards by name..."
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            autoFocus
-                        />
-                    </Col>
-                </Row>
-
-                {/* loading spinner */}
-                {searching && (
-                    <Row className="mb-3">
-                        <Col className="text-center"><LoadingSpinner /></Col>
+                {/* everything below fades when transparent */}
+                <div style={{ opacity: isTransparent ? 0 : 1, transition: "opacity 0.2s ease" }}>
+                    {/* search bar */}
+                    <Row className="mb-4">
+                        <Col xs={12} md={6}>
+                            <Form.Control
+                                placeholder="Search cards by name..."
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                autoFocus
+                            />
+                        </Col>
                     </Row>
-                )}
 
-                {/* failed/no results card search */}
-                {!searching && query.trim() && results.length === 0 && (
-                    <p className="text-muted">No cards found for "{query}".</p>
-                )}
+                    {/* loading spinner */}
+                    {searching && (
+                        <Row className="mb-3">
+                            <Col className="text-center"><LoadingSpinner /></Col>
+                        </Row>
+                    )}
 
-                {/* results grid */}
-                {results.length > 0 && (
-                    <Row>
-                        {results.map((card) => {
-                            const qty = getQuantity(card.id);
-                            return (
-                                <Col key={card.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
-                                    <div style={{ position: "relative", textAlign: "center", overflow: "visible" }}>
-                                        {/* quantity badge */}
-                                        {qty > 0 && (
-                                            <div style={{
-                                                position: "absolute",
-                                                top: "-8px",
-                                                right: "-8px",
-                                                backgroundColor: "rgba(0,0,0,0.7)",
-                                                color: "white",
-                                                borderRadius: "50%",
-                                                width: "24px",
-                                                height: "24px",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                fontSize: "0.75rem",
-                                                fontWeight: "700",
-                                                zIndex: 1,
-                                            }}>{qty}</div>
-                                        )}
-                                        {/* card image - click to open full view */}
-                                        <img
-                                            src={`${card.image}/low.webp`}
-                                            alt={card.name}
-                                            className="card-hoverable"
-                                            style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
-                                            onClick={() => setSelectedCard(card)}
-                                        />
-                                        {/* +/- controls */}
-                                        <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
-                                            <Button
-                                                className="button-gradient"
-                                                size="sm"
-                                                style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
-                                                onClick={() => onRemoveCard(card)}
-                                                disabled={qty === 0}
-                                            >-</Button>
-                                            <span>{qty}</span>
-                                            <Button
-                                                className="button-gradient"
-                                                size="sm"
-                                                style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
-                                                onClick={() => onAddCard(card)}
-                                            >+</Button>
+                    {/* failed/no results card search */}
+                    {!searching && query.trim() && results.length === 0 && (
+                        <p className="text-muted">No cards found for "{query}".</p>
+                    )}
+
+                    {/* results grid */}
+                    {results.length > 0 && (
+                        <Row>
+                            {results.map((card) => {
+                                const qty = getQuantity(card.id);
+                                return (
+                                    <Col key={card.id} xs={6} sm={4} md={3} lg={2} className="mb-4">
+                                        <div style={{ position: "relative", textAlign: "center", overflow: "visible" }}>
+                                            {/* quantity badge */}
+                                            {qty > 0 && (
+                                                <div style={{
+                                                    position: "absolute",
+                                                    top: "-8px",
+                                                    right: "-8px",
+                                                    backgroundColor: "rgba(0,0,0,0.7)",
+                                                    color: "white",
+                                                    borderRadius: "50%",
+                                                    width: "24px",
+                                                    height: "24px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    fontSize: "0.85rem",
+                                                    fontWeight: "700",
+                                                    zIndex: 1,
+                                                }}>{qty}</div>
+                                            )}
+                                            {/* card image - click to open full view */}
+                                            <img
+                                                src={`${card.image}/low.webp`}
+                                                alt={card.name}
+                                                className="card-hoverable"
+                                                style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
+                                                onClick={() => setSelectedCard(card)}
+                                            />
+                                            {/* +/- controls */}
+                                            <div className="d-flex align-items-center justify-content-center gap-2 mt-1">
+                                                <Button
+                                                    className="button-gradient"
+                                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }}
+                                                    onClick={() => onRemoveCard(card)}
+                                                    disabled={qty === 0}
+                                                >-</Button>
+                                                <span>{qty}</span>
+                                                <Button
+                                                    className="button-gradient"
+                                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }}
+                                                    onClick={() => onAddCard(card)}
+                                                >+</Button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Col>
-                            );
-                        })}
-                    </Row>
-                )}
+                                    </Col>
+                                );
+                            })}
+                        </Row>
+                    )}
+                </div>
             </Container>
 
             {/* card full view modal */}
@@ -179,16 +182,16 @@ export default function CardSearchOverlay({ show, onClose, onAddCard, onRemoveCa
                             <div className="d-flex align-items-center justify-content-center gap-3 mt-3">
                                 <Button
                                     className="button-gradient"
-                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
+                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }}
                                     onClick={() => onRemoveCard(selectedCard)}
                                     disabled={getQuantity(selectedCard.id) === 0}
                                 >-</Button>
-                                <span style={{ color: "white", fontSize: "1.2rem", fontWeight: "700" }}>
+                                <span style={{ color: "white", fontSize: "0.85rem", fontWeight: "700" }}>
                                     {getQuantity(selectedCard.id)}
                                 </span>
                                 <Button
                                     className="button-gradient"
-                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "1rem" }}
+                                    style={{ padding: "1px 10px", fontWeight: "700", fontSize: "0.85rem" }}
                                     onClick={() => onAddCard(selectedCard)}
                                 >+</Button>
                             </div>
